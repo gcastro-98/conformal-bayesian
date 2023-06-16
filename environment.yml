@@ -1,0 +1,28 @@
+name: ConformalBayesian
+dependencies:
+- python>=3.7.5
+- numpy>=1.20.3
+- scipy>=1.6.3
+- scikit-learn>=0.24.2
+- pandas
+- matplotlib
+- seaborn
+- joblib
+- tqdm
+- sphinx
+- numpydoc
+- docutils=0.16
+- sphinx_rtd_theme
+- recommonmark
+- notebook
+- ipykernel
+- xlrd
+- conda-forge::pymc3>=3.11.2
+- conda-forge::theano-pymc>=1.1.2
+- pip
+- pip:
+    - sphinx-mdinclude
+    - pydataset
+    - jax>=0.2.13
+    - jaxlib>=0.1.66
+
