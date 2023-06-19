@@ -59,6 +59,7 @@ intervals, and the computation times for each method.
 
 
 import pymc3 as pm
+from os import makedirs
 from jax.ops import index_update
 from sklearn.datasets import load_boston, load_diabetes
 from sklearn.model_selection import train_test_split
@@ -429,6 +430,8 @@ def run_sparse_regression_conformal(dataset, misspec: bool = False):
 
 if __name__ == '__main__':
     __dataset: str = 'diabetes'  # 'boston'
+    makedirs('samples', exist_ok=True)
+    makedirs('results', exist_ok=True)
     # run MCMC
     run_sparse_regression_mcmc('diabetes', misspec=False)
     run_sparse_regression_mcmc('diabetes', misspec=True)

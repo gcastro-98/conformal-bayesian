@@ -56,8 +56,7 @@ including the coverage probabilities, the lengths of the prediction
 intervals, and the computation times for each method.
 
 """
-
-
+import os
 import time
 import numpy as np
 from tqdm import tqdm
@@ -405,5 +404,7 @@ def run_sparse_classification_conformal(dataset):
 
 if __name__ == '__main__':
     __dataset = 'breast'  # 'parkinsons'
+    os.makedirs('samples', exist_ok=True)
+    os.makedirs('results', exist_ok=True)
     run_sparse_classification_mcmc(__dataset)
     run_sparse_classification_conformal(__dataset)
