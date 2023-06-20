@@ -32,7 +32,7 @@ def report_results(regression: bool) -> None:
     if regression:
         _EXAMPLES = EXAMPLES[:2]
     else:
-        _EXAMPLES = EXAMPLES[2]
+        _EXAMPLES = [EXAMPLES[2]]
 
     for example in _EXAMPLES:
         print('EXAMPLE: {}'.format(example))
@@ -114,11 +114,9 @@ def report_missclassification_rates() -> None:
 
 def plot_sparse_classification_results() -> None:
     _ = plt.figure(figsize=(12, 3))
-    plt.subplot(1, 2, 1)
     dataset = 'breast'
     length_cb = np.load("results/length_cb_sparseclass_{}.npy".format(dataset))
     p_bayes = np.load("results/p_bayes_sparseclass_{}.npy".format(dataset))
-    # rep = 50
     sns.histplot(p_bayes[np.where(length_cb == 0)], label='CB length = 0',
                  color='darkred', stat='density')
     sns.histplot(p_bayes[np.where(length_cb == 1)], label='CB length = 1',
@@ -126,26 +124,13 @@ def plot_sparse_classification_results() -> None:
     plt.xlabel(r'$p(y_i = 1 \mid x_i,Z)$')
     plt.legend()
     plt.title('Breast cancer dataset')
-
-    plt.subplot(1, 2, 2)
-    dataset = 'parkinsons'
-    length_cb = np.load("results/length_cb_sparseclass_{}.npy".format(dataset))
-    p_bayes = np.load("results/p_bayes_sparseclass_{}.npy".format(dataset))
-    # rep = 50
-    sns.histplot(p_bayes[np.where(length_cb == 0)], label='CB length = 0',
-                 color='darkred', stat='density')
-    sns.histplot(p_bayes[np.where(length_cb == 1)], label='CB length = 1',
-                 stat='density')
-    plt.xlabel(r'$p(y_i = 1 \mid x_i,Z)$')
-    plt.legend()
-    plt.title('Parkinsons dataset')
     plt.savefig('plots/sparse_classification.png', dpi=250)
 
 
 if __name__ == '__main__':
     os.makedirs('plots', exist_ok=True)
-    # # for regression...
-    # report_results(regression=True)
+    # for regression...
+    report_results(regression=True)
 
     # for classification...
     report_results(regression=False)
