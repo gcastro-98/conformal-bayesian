@@ -1,8 +1,7 @@
 """
 Summary of the Fong & Holmes (2021) implementation on Conformal Bayesian
 Computation. Specifically, this module deals with the sparse regression
-(and its uncertainty quantification) assessed both for the `sklearn`:
-- Boston house prices' dataset (boston)
+(and its uncertainty quantification) assessed for the `sklearn`:
 - Diabetes dataset (diabetes)
 
 The following 4 methods are implemented:
@@ -125,8 +124,8 @@ def fit_mcmc_laplace(y, x, B, seed=100, misspec: bool = False):
             sigma = pm.HalfNormal("sigma", sigma=1)
         obs = pm.Normal('obs', mu=pm.math.dot(x, beta) + intercept,
                         sigma=sigma, observed=y)
-
         trace = pm.sample(B, random_seed=seed, chains=4)
+
     beta_post = trace['beta']
     intercept_post = trace['intercept'].reshape(-1, 1)
     sigma_post = trace['sigma'].reshape(-1, 1)
@@ -433,9 +432,9 @@ if __name__ == '__main__':
     makedirs('samples', exist_ok=True)
     makedirs('results', exist_ok=True)
     # run MCMC
-    run_sparse_regression_mcmc('diabetes', misspec=False)
-    run_sparse_regression_mcmc('diabetes', misspec=True)
+    run_sparse_regression_mcmc(__dataset, misspec=False)
+    run_sparse_regression_mcmc(__dataset, misspec=True)
 
     # run Conformal Bayes
-    run_sparse_regression_conformal('diabetes', misspec=False)
-    run_sparse_regression_conformal('diabetes', misspec=True)
+    run_sparse_regression_conformal(__dataset, misspec=False)
+    run_sparse_regression_conformal(__dataset, misspec=True)

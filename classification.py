@@ -1,9 +1,8 @@
 """
 Summary of the Fong & Holmes (2021) implementation on Conformal Bayesian
 Computation. Specifically, this module deals with the sparse classification
-(and its uncertainty quantification) assessed both for the:
+(and its uncertainty quantification) assessed for the:
 - UCI ML Breast Cancer Wisconsin dataset (breast)
-- Little et al. (2008) Parkisons dataset (parkinsons)
 
 The following 4 methods are implemented:
 - Bayesian inference (bayes)
@@ -115,13 +114,13 @@ def load_train_test_sparse_classification(train_frac, dataset, seed):
 # Laplace prior PyMC3 model
 def fit_mcmc_laplace(y, x, B, seed=100):
     with pm.Model() as _:  # as model
-        # p = np.shape(x)[1]
-        # # Laplace
-        # b = pm.Gamma('b', alpha=1, beta=1)
-        # beta = pm.Laplace('beta', mu=0, b=b, shape=p)
-        # intercept = pm.Flat('intercept')
-        # obs = pm.Bernoulli(
-        #     'obs', logit_p=pm.math.dot(x, beta) + intercept, observed=y)
+        p = np.shape(x)[1]
+        # Laplace
+        b = pm.Gamma('b', alpha=1, beta=1)
+        beta = pm.Laplace('beta', mu=0, b=b, shape=p)
+        intercept = pm.Flat('intercept')
+        obs = pm.Bernoulli(
+            'obs', logit_p=pm.math.dot(x, beta) + intercept, observed=y)
         trace = pm.sample(B, random_seed=seed, chains=4)
 
     beta_post = trace['beta']
